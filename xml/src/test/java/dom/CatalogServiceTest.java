@@ -6,9 +6,11 @@ import org.xmlunit.matchers.CompareMatcher;
 import javax.xml.catalog.Catalog;
 import java.util.List;
 
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.xmlunit.matchers.CompareMatcher.isIdenticalTo;
+import static org.xmlunit.matchers.EvaluateXPathMatcher.hasXPath;
 
 public class CatalogServiceTest {
 
@@ -32,5 +34,8 @@ public class CatalogServiceTest {
 
         assertThat(xml, isIdenticalTo(CatalogServiceTest.class.getResourceAsStream("/expected-catalog.xml"))
                 .ignoreWhitespace());
+
+        assertThat(xml, hasXPath("/catalog/book[@isbn10 = '059610149X']/title",
+                equalTo("Java and XML")));
     }
 }
