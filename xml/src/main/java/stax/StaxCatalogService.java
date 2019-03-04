@@ -84,7 +84,7 @@ public class StaxCatalogService {
             }
             streamWriter.writeEndElement();
             streamWriter.flush();
-            return streamWriter.toString();
+            return stringWriter.toString();
         } catch (XMLStreamException xse) {
             throw new IllegalStateException("Error writing xml", xse);
         }
