@@ -4,6 +4,9 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.EntityResolver;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 import javax.print.Doc;
 import javax.xml.parsers.DocumentBuilder;
@@ -13,6 +16,7 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
 import java.util.ArrayList;
@@ -83,9 +87,25 @@ public class CatalogService {
     public boolean validateXml(InputStream inputStream) {
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            factory.setValidating(true);
             DocumentBuilder builder = factory.newDocumentBuilder();
+
+            CatalogErrorHandler errorHandler = new CatalogErrorHandler();
+            builder.setErrorHandler(errorHandler);
+
+            builder.setEntityResolver(new EntityResolver() {
+                @Override
+                public InputSource resolveEntity(String publicId, String systemId) throws SAXException, IOException {
+                    System.out.println("publidId " + publicId);
+                    System.out.println("systemId " + systemId);
+
+                    return new InputSource(CatalogService.class.getResourceAsStream("/catalog.dtd"));
+                }
+            });
+
             Document document = builder.parse(inputStream);
-            return true;
+
+            return errorHandler.isValid();
         }
         catch (Exception e) {
             throw new IllegalStateException("Can not parse", e);

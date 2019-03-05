@@ -38,4 +38,12 @@ public class CatalogServiceTest {
         assertThat(xml, hasXPath("/catalog/book[@isbn10 = '059610149X']/title",
                 equalTo("Java and XML")));
     }
+
+    @Test
+    public void testValidate() {
+        boolean valid = new CatalogService().validateXml(CatalogServiceTest.class
+        .getResourceAsStream("/catalog.xml"));
+
+        System.out.println(valid);
+    }
 }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!DOCTYPE catalog SYSTEM "catalog.dtd">
-<catalog>
+<catalog   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation=
+                   "https://training360.com/schemas/catalog https://training360.com/schemas/catalog/catalog.xsd">
     <book isbn10="059610149X">
         <title>Java and XML</title>
         <kutya />
