@@ -1,6 +1,8 @@
 package validator;
 
+import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
 
 import javax.xml.XMLConstants;
 import javax.xml.transform.stream.StreamSource;
@@ -19,13 +21,39 @@ public class CatalogValidator {
                     new StreamSource(CatalogValidator.class.getResourceAsStream("/catalog.xsd")));
             Validator validator = schema.newValidator();
 
-//            validator.setErrorHandler();
+
+            MyErrorHandler myErrorHandler = new MyErrorHandler();
+            validator.setErrorHandler(myErrorHandler);
 
             validator.validate(new StreamSource(inputStream));
-            return true;
+            return myErrorHandler.isValid();
         }
         catch (SAXException | IOException e) {
             throw new IllegalStateException("Can not validate", e);
+        }
+    }
+
+    private static class MyErrorHandler implements ErrorHandler {
+        private boolean valid = true;
+
+        @Override
+        public void warning(SAXParseException exception) throws SAXException {
+
+        }
+
+        @Override
+        public void error(SAXParseException exception) throws SAXException {
+            valid = false;
+            System.out.println(exception.getMessage());
+        }
+
+        @Override
+        public void fatalError(SAXParseException exception) throws SAXException {
+
+        }
+
+        public boolean isValid() {
+            return valid;
         }
     }
 }
