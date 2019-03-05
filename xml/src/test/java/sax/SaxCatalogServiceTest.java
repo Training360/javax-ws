@@ -12,7 +12,7 @@ public class SaxCatalogServiceTest {
     public void testParse() {
         SaxCatalogService catalogService = new SaxCatalogService();
         List<Book> books = catalogService.parse(SaxCatalogServiceTest.class
-                .getResourceAsStream("/catalog.xml"));
+                .getResourceAsStream("/catalog-ns2.xml"));
 
 //        System.out.println(books);
         assertEquals("059610149X", books.get(0).getIsbn10());

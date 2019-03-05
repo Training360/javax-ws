@@ -21,6 +21,8 @@ public class StaxCatalogService {
             while (r.hasNext()) {
                 if (r.getEventType() == XMLStreamConstants.START_ELEMENT) {
                     String tagName = r.getName().getLocalPart();
+                    System.out.println(r.getName().getNamespaceURI());
+                    System.out.println(r.getName().getPrefix());
                     if ("book".equals(tagName)) {
                         books.add(new Book(null,
                                 r.getAttributeValue(null, "isbn10")));
@@ -49,6 +51,8 @@ public class StaxCatalogService {
                 XMLEvent event = r.nextEvent();
                 if (event instanceof StartElement) {
                     StartElement element = (StartElement) event;
+                    System.out.println(element.getName().getNamespaceURI());
+                    System.out.println(element.getName().getPrefix());
                     if ("book".equals(element.getName().getLocalPart())) {
                         String isbn = element.getAttributeByName(new QName("isbn10")).getValue();
                         books.add(new Book(null, isbn));

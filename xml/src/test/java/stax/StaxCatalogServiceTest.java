@@ -16,7 +16,7 @@ public class StaxCatalogServiceTest {
     public void testParse() {
         StaxCatalogService catalogService = new StaxCatalogService();
         List<Book> books = catalogService.parseWithCursor(StaxCatalogService.class
-                .getResourceAsStream("/catalog.xml"));
+                .getResourceAsStream("/catalog-ns.xml"));
 
 //        System.out.println(books);
         assertEquals("059610149X", books.get(0).getIsbn10());
@@ -28,7 +28,7 @@ public class StaxCatalogServiceTest {
     public void testParseWithIterator() {
         StaxCatalogService catalogService = new StaxCatalogService();
         List<Book> books = catalogService.parseWithIterator(StaxCatalogService.class
-                .getResourceAsStream("/catalog.xml"));
+                .getResourceAsStream("/catalog-ns.xml"));
 
 //        System.out.println(books);
         assertEquals("059610149X", books.get(0).getIsbn10());

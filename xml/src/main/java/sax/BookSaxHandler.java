@@ -17,8 +17,11 @@ public class BookSaxHandler extends DefaultHandler {
 
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-        names.push(qName);
-        if ("book".equals(qName)) {
+        System.out.println("uri: " + uri);
+        System.out.println("localName: " + localName);
+        System.out.println("qName: " + qName);
+        names.push(localName);
+        if ("book".equals(localName)) {
             Book book = new Book("", attributes.getValue("isbn10"));
             books.add(book);
         }

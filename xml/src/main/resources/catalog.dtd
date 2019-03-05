@@ -1,0 +1,5 @@
+<!ELEMENT catalog (book)>
+<!ELEMENT book (title, available)>
+<!ATTLIST book isbn10 CDATA "">
+<!ELEMENT title (#PCDATA)>
+<!ELEMENT available EMPTY>

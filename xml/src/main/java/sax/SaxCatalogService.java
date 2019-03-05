@@ -10,6 +10,7 @@ public class SaxCatalogService {
     public List<Book> parse(InputStream is) {
         try {
             SAXParserFactory factory = SAXParserFactory.newInstance();
+            factory.setNamespaceAware(true);
             SAXParser saxParser = factory.newSAXParser();
             BookSaxHandler handler = new BookSaxHandler();
             saxParser.parse(is, handler);

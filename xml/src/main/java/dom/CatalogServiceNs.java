@@ -2,10 +2,8 @@ package dom;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import javax.print.Doc;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.OutputKeys;
@@ -18,20 +16,34 @@ import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CatalogService {
+public class CatalogServiceNs {
+
+    public static final String CATALOG_NS = "http://training360.com/schemas/catalog";
 
     public List<Book> parse(InputStream inputStream) {
         try {
             DocumentBuilderFactory factory =
                     DocumentBuilderFactory.newInstance();
+
+            factory.setNamespaceAware(true);
+
             DocumentBuilder builder = factory.newDocumentBuilder();
             Document document = builder.parse(inputStream);
-            NodeList books = document.getElementsByTagName("book");
+//            NodeList books = document.getElementsByTagName("c:book");
+            NodeList books = document.getElementsByTagNameNS(CATALOG_NS, "book");
             List<Book> bookList = new ArrayList<>();
             for (int i = 0; i < books.getLength(); i++) {
                 Element book = (Element) books.item(i);
+
+                System.out.println(book.getNamespaceURI());
+                System.out.println(book.getLocalName());
+                System.out.println(book.getPrefix());
+
                 String isbn10 = book.getAttribute("isbn10");
-                Element title = (Element) book.getElementsByTagName("title")
+//                Element title = (Element) book.getElementsByTagName("c:title")
+//                        .item(0);
+                Element title = (Element) book
+                        .getElementsByTagNameNS(CATALOG_NS, "title")
                         .item(0);
                 String titleValue = title.getTextContent();
                 bookList.add(new Book(titleValue, isbn10));
@@ -47,17 +59,26 @@ public class CatalogService {
         try {
             DocumentBuilderFactory factory =
                     DocumentBuilderFactory.newInstance();
+
+            factory.setNamespaceAware(true);
+
             DocumentBuilder builder = factory.newDocumentBuilder();
             Document document = builder.newDocument();
-            Element catalogElement = document.createElement("catalog");
+
+            Element catalogElement = document.createElementNS(CATALOG_NS, "catalog");
+            catalogElement.setPrefix("c");
+//            catalogElement.setAttribute("xmlns:c", CATALOG_NS);
+
             document.appendChild(catalogElement);
 
             for (Book book: books) {
-                Element bookElement = document.createElement("book");
+                Element bookElement = document.createElementNS(CATALOG_NS,"book");
+                bookElement.setPrefix("c");
                 catalogElement.appendChild(bookElement);
                 bookElement.setAttribute("isbn10", book.getIsbn10());
 
-                Element titleElement = document.createElement("title");
+                Element titleElement = document.createElementNS(CATALOG_NS, "title");
+                titleElement.setPrefix("c");
                 bookElement.appendChild(titleElement);
 
                 titleElement.setTextContent(book.getTitle());
@@ -77,18 +98,6 @@ public class CatalogService {
         }
         catch (Exception e) {
             throw new IllegalStateException("Can not write xml", e);
-        }
-    }
-
-    public boolean validateXml(InputStream inputStream) {
-        try {
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder builder = factory.newDocumentBuilder();
-            Document document = builder.parse(inputStream);
-            return true;
-        }
-        catch (Exception e) {
-            throw new IllegalStateException("Can not parse", e);
         }
     }
 }
