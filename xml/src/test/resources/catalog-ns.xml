@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<catalog xmlns="http://training360.com/schemas/catalog">
+<catalog xmlns="http://training360.com/schemas/catalog"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation=
+                 "http://training360.com/schemas/catalog catalog-ns.xsd">
     <book isbn10="059610149X">
         <title>Java and XML</title>
     </book>
