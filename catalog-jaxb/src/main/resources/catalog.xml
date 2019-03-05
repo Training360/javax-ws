@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<book-catalog>
+    <books>
+        <book isbn10="x111">
+            <release-year>1999</release-year>
+            <title>Java and XML</title>
+        </book>
+        <book isbn10="x112">
+            <release-year>2011</release-year>
+            <title>Java and JAXB</title>
+        </book>
+        <book isbn10="x113">
+            <release-year>2010</release-year>
+            <title>Java and Java</title>
+        </book>
+        <book isbn10="x114">
+            <release-year>2010</release-year>
+            <title>Java and Spring</title>
+        </book>
+    </books>
+</book-catalog>

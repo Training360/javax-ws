@@ -1,5 +1,10 @@
-package catalog;
+package catalog.entities;
 
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
+
+@XmlType(propOrder = {"year", "title"})
 public class Book {
 
     private String title;
@@ -25,6 +30,7 @@ public class Book {
         this.title = title;
     }
 
+    @XmlAttribute
     public String getIsbn10() {
         return isbn10;
     }
@@ -33,6 +39,7 @@ public class Book {
         this.isbn10 = isbn10;
     }
 
+    @XmlElement(name = "release-year")
     public long getYear() {
         return year;
     }

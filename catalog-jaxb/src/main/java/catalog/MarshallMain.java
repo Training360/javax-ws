@@ -1,5 +1,8 @@
 package catalog;
 
+import catalog.entities.Book;
+import catalog.entities.Catalog;
+
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
@@ -10,6 +13,9 @@ public class MarshallMain {
     public static void main(String[] args) throws JAXBException {
         JAXBContext ctx = JAXBContext.newInstance(Catalog.class, Book.class);
         Marshaller marshaller = ctx.createMarshaller();
+
+        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT,
+                Boolean.TRUE);
 
         Catalog catalog = new Catalog(List.of(
                 new Book("Java and XML", "x111", 1999),
