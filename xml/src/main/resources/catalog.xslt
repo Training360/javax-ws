@@ -9,6 +9,7 @@
                     <xsl:for-each select="/catalog/book">
                         <tr>
                             <td><xsl:value-of select="title"/></td>
+                            <td><xsl:value-of select="@isbn10" /></td>
                             <td><xsl:if test="available">available</xsl:if></td>
                         </tr>
                     </xsl:for-each>

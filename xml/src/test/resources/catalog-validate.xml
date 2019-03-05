@@ -10,5 +10,6 @@
     </book>
     <book isbn10="059610149X">
         <title>Java and XML: Solutions to Real-World Problems</title>
+        <available />
     </book>
 </catalog>
