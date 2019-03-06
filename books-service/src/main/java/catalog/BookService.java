@@ -1,8 +1,10 @@
 package catalog;
 
 import javax.jws.WebMethod;
+import javax.jws.WebParam;
 import javax.jws.WebResult;
 import javax.jws.WebService;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.ws.RequestWrapper;
 import javax.xml.ws.ResponseWrapper;
 import java.util.List;
@@ -24,5 +26,11 @@ public class BookService {
                 new Book("Java and Java", "x1234"),
                 new Book("Java and And", "x1234")
                 );
+    }
+
+    @WebMethod
+    public void saveBook(@XmlElement(required = true) @WebParam(name = "book") Book book) {
+        System.out.println(book.getTitle());
+        System.out.println(book.getIsbn10());
     }
 }
